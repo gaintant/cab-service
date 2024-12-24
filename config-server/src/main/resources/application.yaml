@@ -8,5 +8,16 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/your-repo/config-repo # Replace with your Git repo URL
+          uri: https://github.com/gaintant/Configs
           clone-on-start: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8762/eureka/ # URL of the Eureka server
+    register-with-eureka: true # Enable client registration
+    fetch-registry: true       # Fetch registry from Eureka server
+  instance:
+    prefer-ip-address: true    # Use IP address for registration instead of hostname
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
