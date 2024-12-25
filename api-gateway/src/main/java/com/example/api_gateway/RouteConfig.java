@@ -11,11 +11,14 @@ public class RouteConfig {
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 // Route for user
-                .route("user", r -> r.path("/user/**")
-                        .uri("lb://USER"))
-                // Route for sample client
-                .route("SAMPLE-CLIENT", r -> r.path("/sample/**")
-                        .uri("lb://SAMPLE-CLIENT"))
+//                .route("user", r -> r.path("/user/**")
+//                        .uri("lb://USER"))
+//                // Route for sample client
+//                .route("SAMPLE-CLIENT", r -> r.path("/sample/**")
+//                        .uri("lb://SAMPLE-CLIENT"))
+                .route("stakeholder", r -> r.path("/hello/**")
+                        .uri("lb://STAKEHOLDER"))
+
                 .build();
     }
 }

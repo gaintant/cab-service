@@ -1,5 +1,3 @@
-
-
 spring:
   application:
     name: API-GATEWAY-SERVICE
@@ -8,8 +6,19 @@ spring:
   cloud:
     config:
       uri: http://localhost:9010
+    discovery:
+      client:
+        enabled: true
   config:
-    import: optional:configserver:http://localhost:9010
+    import: configserver:http://localhost:9010
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: Ov23liz6k2iRoYXdxmQf
+            clientSecret: cebde1b652a6d252a116748c375e5570ec7b9f65
+
 server:
-  port: 9000
+  port: 8090
 
