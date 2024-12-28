@@ -1,0 +1,24 @@
+#spring.application.name=cab-location-holder
+
+server:
+  port: 8762
+spring:
+  application:
+    name: cab-location-holder
+  cloud:
+    config:
+      uri: http://localhost:9010
+  config:
+    import: configserver:http://localhost:9010
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: my-group
+      auto-offset-reset: earliest
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    listener:
+      missing-topics-fatal: false

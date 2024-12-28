@@ -30,6 +30,7 @@ public class SecurityConfig {
 //                .authorizeHttpRequests(req -> req.anyRequest().authenticated())
                 .authorizeExchange(req -> req.anyExchange().authenticated())
                 .oauth2Login(Customizer.withDefaults())
+//                .
                 .build();
     }
 }
