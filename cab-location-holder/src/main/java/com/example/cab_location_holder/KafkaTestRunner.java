@@ -1,7 +1,7 @@
 package com.example.cab_location_holder;
 
-import com.example.cab_location_holder.Consumer.cabLocationHolder;
-import com.example.cab_location_holder.model.CabLocation;
+import com.example.cab_location_holder.service.CabLocationHolderImp;
+import com.example.cab_location_holder.model.CabInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class KafkaTestRunner implements CommandLineRunner {
 
     @Autowired
-    private cabLocationHolder cabLocationHolder;
+    private CabLocationHolderImp cabLocationHolder;
     @Autowired
     private KafkaProducer producer;
 
@@ -18,7 +18,7 @@ public class KafkaTestRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         // Sending test messages
         for (int i = 1; i <= 15; i++) {
-            producer.sendMessage(CabLocation.builder()
+            producer.sendMessage(CabInfo.builder()
                     .cabID(String.valueOf(i))
                     .isAvailable(true)
                     .latitude(Math.random())

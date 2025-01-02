@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CabLocation {
+public class CabInfo {
     @JsonProperty("cabID")
     private String cabID;
 

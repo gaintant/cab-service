@@ -1,7 +1,7 @@
 package com.example.cab_location_holder.kafkaFactory;
 
 
-import com.example.cab_location_holder.model.CabLocation;
+import com.example.cab_location_holder.model.CabInfo;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +20,8 @@ import java.util.Map;
 public class CabLocationFactory {
 
     @Bean
-    public ConsumerFactory<String, CabLocation> consumerFactory() {
-        JsonDeserializer<CabLocation> deserializer = new JsonDeserializer<>(CabLocation.class);
+    public ConsumerFactory<String, CabInfo> consumerFactory() {
+        JsonDeserializer<CabInfo> deserializer = new JsonDeserializer<>(CabInfo.class);
         deserializer.addTrustedPackages("*"); // Allow deserialization from any package
 
         Map<String, Object> props = new HashMap<>();
@@ -39,8 +39,8 @@ public class CabLocationFactory {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, CabLocation> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, CabLocation> factory =
+    public ConcurrentKafkaListenerContainerFactory<String, CabInfo> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, CabInfo> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;

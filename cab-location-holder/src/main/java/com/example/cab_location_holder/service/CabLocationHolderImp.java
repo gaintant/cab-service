@@ -1,19 +1,16 @@
-package com.example.cab_location_holder.Consumer;
-import com.example.cab_location_holder.model.CabLocation;
+package com.example.cab_location_holder.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Circle;
 import org.springframework.data.geo.GeoResult;
-import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Point;
 import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class cabLocationHolder {
+public class CabLocationHolderImp implements CabLocationHolder{
 
     private static final String GEO_KEY = "cabs";
 
@@ -29,17 +26,16 @@ public class cabLocationHolder {
                         RedisGeoCommands.GeoRadiusCommandArgs.newGeoRadiusArgs().includeCoordinates().includeDistance().sortAscending()
                 ).getContent();
         System.out.println(String.valueOf(latitude) + " " + String.valueOf(longitude));
-        nearestCab.forEach(cab -> System.out.println(cab.getContent().getName() + " " + cab.getContent().getPoint() + cab.getDistance()));
-        if(nearestCab.size() == 0)
+        if(nearestCab.isEmpty())
             return findNearestCabs(longitude, latitude, radius*2);
         return nearestCab.get(0).getContent().getName();
     }
-    @KafkaListener(topics = "cab-location", groupId = "locator", containerFactory = "kafkaListenerContainerFactory")
-    public void consume(CabLocation cabLocation) {
-        redisTemplate.opsForGeo().add(GEO_KEY,
-                new RedisGeoCommands.GeoLocation<>(cabLocation.getCabID(),
-                        new Point(cabLocation.getLongitude(), cabLocation.getLatitude())));
-        System.out.println("added to redis data:" + cabLocation);
-        System.out.println("founded cab" + findNearestCabs(Math.random(), Math.random(), 5000));
-    }
+//    @KafkaListener(topics = "cab-location", groupId = "locator", containerFactory = "kafkaListenerContainerFactory")
+//    public void consume(CabInfo cabInfo) {
+//        redisTemplate.opsForGeo().add(GEO_KEY,
+//                new RedisGeoCommands.GeoLocation<>(cabInfo.getCabID(),
+//                        new Point(cabInfo.getLongitude(), cabInfo.getLatitude())));
+//        System.out.println("added to redis data:" + cabInfo);
+//        System.out.println("founded cab" + findNearestCabs(Math.random(), Math.random(), 5000));
+//    }
 }
